@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>命名空间罗盘 · OPC UA NodeSet 合并 / 引用闭包 / 模型差异</title>
+<link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+<header>
+  <div class="brand">🧭 <b>命名空间罗盘</b> <span class="muted">Namespace Compass · OPC UA NodeSet</span></div>
+  <div class="actions">
+    <select id="branch"></select>
+    <button id="btn-tour">▶ 播放离线案例（~90s）</button>
+    <button id="btn-refresh">刷新</button>
+    <button id="btn-export">导出 JSON</button>
+    <label class="btn-like">导入 JSON<input id="file-import" type="file" accept="application/json" hidden/></label>
+  </div>
+</header>
+
+<div id="tourbar" class="tourbar hidden"></div>
+
+<section class="statusbar">
+  <div>规则版本 <code id="rule-version">…</code> · 存储 schema <code id="schema-version">…</code></div>
+  <div>当前分支 head：<code id="head-seq">0</code></div>
+  <div><a href="#" id="link-tour-status">重放诊断码</a>：<code id="codes">—</code></div>
+</section>
+
+<nav class="tabs">
+  <button data-tab="namespaces" class="active">Namespace 映射</button>
+  <button data-tab="hierarchy">类型层次</button>
+  <button data-tab="graph">引用图</button>
+  <button data-tab="unresolved">未解析依赖</button>
+  <button data-tab="diff">语义差异</button>
+  <button data-tab="raw">原始基线</button>
+  <button data-tab="timeline">事件 / 重放</button>
+  <button data-tab="branches">分支与裁定</button>
+  <button data-tab="rationale">机器判据</button>
+</nav>
+
+<main>
+  <section id="tab-namespaces" class="tab active"></section>
+  <section id="tab-hierarchy" class="tab hidden"></section>
+  <section id="tab-graph" class="tab hidden"></section>
+  <section id="tab-unresolved" class="tab hidden"></section>
+  <section id="tab-diff" class="tab hidden"></section>
+  <section id="tab-raw" class="tab hidden"></section>
+  <section id="tab-timeline" class="tab hidden"></section>
+  <section id="tab-branches" class="tab hidden"></section>
+  <section id="tab-rationale" class="tab hidden"></section>
+</main>
+
+<div id="drawer" class="drawer hidden">
+  <div class="drawer-head">
+    <b id="drawer-title">来源链</b>
+    <button id="drawer-close">×</button>
+  </div>
+  <div id="drawer-body"></div>
+</div>
+
+<footer class="muted">
+  数字 ns index 仅在单文件内有效，合并按 URI 重映射；逆向/正向引用规范化但不制造缺边；依赖缺失保留 unresolved 节点。
+</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

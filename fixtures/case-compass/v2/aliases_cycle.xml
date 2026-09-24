@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Alias cycle: Alpha -> Beta -> Alpha. No alias in this chain resolves. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" LastModified="2026-09-14T00:00:00Z">
+  <NamespaceUris><Uri>urn:factory:cycle</Uri></NamespaceUris>
+  <Models><Model ModelUri="urn:factory:cycle" Version="0.1.0"/></Models>
+  <Aliases>
+    <Alias Alias="Alpha">Beta</Alias>
+    <Alias Alias="Beta">Alpha</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=9001" BrowseName="1:CyclicRefHolder">
+    <DisplayName>Cyclic ref holder</DisplayName>
+    <References>
+      <Reference ReferenceType="i=35">Alpha</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

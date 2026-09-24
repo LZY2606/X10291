@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           LastModified="2026-09-01T00:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:factory:base</Uri>
+  </NamespaceUris>
+  <ServerUris>
+    <Uri>urn:server:line-3</Uri>
+  </ServerUris>
+  <Aliases>
+    <Alias Alias="Organizes">i=35</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="HasSubtype">i=45</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="urn:factory:base" Version="1.4.0" PublicationDate="2026-08-01T00:00:00Z"/>
+    <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05.0" PublicationDate="2024-11-21T00:00:00Z"/>
+  </Models>
+
+  <VendorExtension Vendor="AcmeRobotics" Schema="urn:acme:layout:1">
+    <Grid originX="0" originY="0" cellSizeMm="500"/>
+  </VendorExtension>
+
+  <UAObjectType NodeId="ns=1;i=1001" BrowseName="1:MachineToolType">
+    <DisplayName>MachineToolType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+    </References>
+  </UAObjectType>
+
+  <UAObject NodeId="ns=1;i=2001" BrowseName="1:Line3">
+    <DisplayName>Line 3</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">ns=1;i=2002</Reference>
+      <Reference ReferenceType="Organizes">ns=1;i=2003</Reference>
+    </References>
+  </UAObject>
+
+  <UAObject NodeId="ns=1;i=2002" BrowseName="1:MillStation">
+    <DisplayName>Mill Station</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=1;i=1001</Reference>
+    </References>
+  </UAObject>
+
+  <UAObject NodeId="ns=1;i=2003" BrowseName="1:PressStation">
+    <DisplayName>Press Station</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=1;i=1001</Reference>
+    </References>
+  </UAObject>
+
+  <UAVariable NodeId="ns=1;i=3001" BrowseName="1:AxisXPosition" DataType="i=11">
+    <DisplayName>Axis X position</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2002</Reference>
+    </References>
+    <Value unit="mm" coordinateBasis="MachineCoord">1200</Value>
+  </UAVariable>
+
+  <UAVariable NodeId="ns=1;i=3002" BrowseName="1:HydraulicPressure" DataType="i=10">
+    <DisplayName>Hydraulic pressure</DisplayName>
+    <References>
+      <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=2003</Reference>
+    </References>
+    <Value unit="bar">6</Value>
+  </UAVariable>
+
+  <UAVariable NodeId="ns=1;i=3003" BrowseName="1:BearingTemperature" DataType="i=10">
+    <DisplayName>Bearing temperature</DisplayName>
+    <References>
+      <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=2002</Reference>
+    </References>
+    <Value unit="degC">36.5</Value>
+  </UAVariable>
+
+  <UAVariable NodeId="ns=1;i=3004" BrowseName="1:OddDistance" DataType="i=11">
+    <DisplayName>Odd distance</DisplayName>
+    <References>
+      <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=2003</Reference>
+    </References>
+    <VendorNote>legacy gauge, no SI mapping</VendorNote>
+    <Value unit="furlong" coordinateBasis="LegacyFloorGrid">42</Value>
+  </UAVariable>
+</UANodeSet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Conflicting human decision: same global NodeId gets two type definitions.
+     Both legal candidates must remain visible until a branch is chosen. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" LastModified="2026-09-13T00:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:factory:base</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:base" Version="1.5.0-draftA" PublicationDate="2026-09-13T00:00:00Z"/>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=1001" BrowseName="1:MachineToolType">
+    <DisplayName>MachineToolType (draft A: subtype of TopologyElementType)</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45" IsForward="false">ns=1;i=1002</Reference>
+    </References>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;i=1002" BrowseName="1:TopologyElementType">
+    <DisplayName>TopologyElementType</DisplayName>
+  </UAObjectType>
+</UANodeSet>

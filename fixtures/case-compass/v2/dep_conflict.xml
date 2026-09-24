@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dependency version conflict: requires base 1.4.0 while another file requires 1.4.2. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" LastModified="2026-09-15T00:00:00Z">
+  <NamespaceUris><Uri>urn:factory:reporting</Uri></NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:reporting" Version="3.0.0"/>
+    <RequiredModel ModelUri="urn:factory:base" Version="1.4.0" PublicationDate="2026-08-01T00:00:00Z"/>
+  </Models>
+  <VendorReport format="csv-daily" retentionDays="90"/>
+  <UAObject NodeId="ns=1;i=5001" BrowseName="1:DailyReport">
+    <DisplayName>Daily report</DisplayName>
+  </UAObject>
+</UANodeSet>

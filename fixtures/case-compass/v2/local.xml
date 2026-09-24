@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Localized source change: one new object depending on ServerStatus (i=2256). -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" LastModified="2026-09-12T00:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:factory:line</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="urn:factory:line" Version="0.9.3" PublicationDate="2026-09-12T00:00:00Z"/>
+  </Models>
+  <UAObject NodeId="ns=1;i=4010" BrowseName="1:StatusBoard">
+    <DisplayName>Status board</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">i=2256</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>
