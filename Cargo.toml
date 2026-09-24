@@ -1,0 +1,26 @@
+[package]
+name = "nscompass"
+version = "0.1.0"
+edition = "2021"
+description = "命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异（可重放）"
+license = "MIT"
+
+[[bin]]
+name = "nscompass"
+path = "src/main.rs"
+
+[dependencies]
+axum = { version = "0.8", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.5"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.35", features = ["bundled"] }
+quick-xml = "0.37"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.dev]
+opt-level = 0
