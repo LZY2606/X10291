@@ -1,0 +1,24 @@
+[package]
+name = "ns-compass"
+version = "0.1.0"
+edition = "2021"
+description = "命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异（可重放）"
+
+[lib]
+name = "ns_compass"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ns-compass"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+quick-xml = "0.36"
+sha2 = "0.10"
+
+[dev-dependencies]

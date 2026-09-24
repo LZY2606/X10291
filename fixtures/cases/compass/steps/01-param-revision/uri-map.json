@@ -1,0 +1,18 @@
+{
+  "note": "参数修订：新增 rpm 与 deg 的规范化换算（派生层生效，原始量值仍保留）",
+  "global_index": [
+    "http://opcfoundation.org/UA/",
+    "urn:example:compass:core",
+    "urn:example:compass:lineA",
+    "urn:example:vendor:pack"
+  ],
+  "units": {
+    "m": {"si": "m", "factor": 1.0},
+    "mm": {"si": "m", "factor": 0.001},
+    "rpm": {"si": "rad/s", "factor": 0.1047197551},
+    "deg": {"si": "rad", "factor": 0.0174532925}
+  },
+  "frames": {
+    "shaft-axis": {"datum": "motor-shaft-centerline", "epsg": null}
+  }
+}

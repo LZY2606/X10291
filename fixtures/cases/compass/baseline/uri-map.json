@@ -1,0 +1,16 @@
+{
+  "note": "全局 namespace 索引按 URI 分配；文件内数字 index 只在单文件内有意义",
+  "global_index": [
+    "http://opcfoundation.org/UA/",
+    "urn:example:compass:core",
+    "urn:example:compass:lineA",
+    "urn:example:vendor:pack"
+  ],
+  "units": {
+    "m": {"si": "m", "factor": 1.0},
+    "mm": {"si": "m", "factor": 0.001}
+  },
+  "frames": {
+    "shaft-axis": {"datum": "motor-shaft-centerline", "epsg": null}
+  }
+}
