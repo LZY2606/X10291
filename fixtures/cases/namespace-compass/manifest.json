@@ -1,0 +1,97 @@
+{
+  "id": "namespace-compass",
+  "title": "命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异",
+  "narrative": "工业建模团队先导入 foundation、boiler 与 skid 三份 NodeSet，核对无损基线；随后修订参数、做一次只影响局部依赖的源数据改动，再在边界包上处理重复 NodeId、namespace 重排、alias 循环、逆向引用、依赖版本冲突、未知扩展与删除后悬空引用。第二个分支专门验证数字 index 仅在单文件内有意义、inverse/forward 规范化不制造缺边、依赖缺失保留 unresolved 节点，并且无法唯一决定时保留全部合法候选。",
+  "steps": [
+    {
+      "id": "01-baseline",
+      "title": "初始导入：无损基线",
+      "kind": "import",
+      "branch": "main",
+      "files": [
+        "files/base/base-ua.xml",
+        "files/boiler/v1.xml",
+        "files/skid/v1.xml"
+      ],
+      "base_step": null,
+      "description": "导入 foundation、boiler 1.0.0、skid 1.0.0。原 XML 节点、namespace table、NodeId、BrowseName、reference、alias、model dependency 与未识别扩展全部保留；含一条逆向引用(i=45 IsForward=false)与一个无法转换的单位 furlong/fortnight。",
+      "expected_events": ["inverse_normalized", "unit_unconvertible"],
+      "decision": null
+    },
+    {
+      "id": "02-parameter-revision",
+      "title": "参数修订：汽包压力设定值 10.5 -> 9.8 bar",
+      "kind": "revise_parameter",
+      "branch": "main",
+      "files": [
+        "files/base/base-ua.xml",
+        "files/boiler/v2.xml",
+        "files/skid/v1.xml"
+      ],
+      "base_step": "01-baseline",
+      "description": "只改 boiler 参数与新增泵回路。依赖图传播应只重建 boiler 来源节点及其引用邻居，skid 未改文件中的节点保持有效并被说明为何可复用。",
+      "expected_events": ["unit_unconvertible", "dangling_reference"],
+      "decision": null
+    },
+    {
+      "id": "03-local-dependency-edit",
+      "title": "局部依赖改动：skid 1.1.0 且 namespace 重排",
+      "kind": "local_dependency_edit",
+      "branch": "main",
+      "files": [
+        "files/base/base-ua.xml",
+        "files/boiler/v2.xml",
+        "files/skid/v2.xml"
+      ],
+      "base_step": "02-parameter-revision",
+      "description": "仅 skid 侧变化：boiler URI 在 skid 内从 index 2 移到 3（合并仍按 URI），删除的 WaterFilter 从 skid 产生悬空引用，新增 Cooling Manifold 为局部节点。boiler 参数结论保持有效。",
+      "expected_events": ["namespace_reindexed", "dangling_reference", "unit_unconvertible"],
+      "decision": null
+    },
+    {
+      "id": "04-boundary-load",
+      "title": "边界包载入：七种异常同时出现",
+      "kind": "boundary",
+      "branch": "boundary",
+      "files": [
+        "files/base/base-ua.xml",
+        "files/boiler/v2.xml",
+        "files/skid/v2.xml",
+        "files/optional/edge-pack.xml"
+      ],
+      "base_step": null,
+      "description": "edge-pack 制造 alias 循环、重复 NodeId(ns=1;i=4001)、逆向引用、依赖版本冲突(boiler 9.9.9 与 UA 1.04.0)、缺失依赖 missing-aux、未识别 VendorExtension、以及删除节点 ns=2;i=99999 的悬空引用。输入片段、判定状态与受影响对象全部保留。",
+      "expected_events": [
+        "duplicate_nodeid",
+        "alias_cycle",
+        "inverse_normalized",
+        "model_version_conflict",
+        "model_dependency_missing",
+        "dangling_reference",
+        "reference_type_unresolved"
+      ],
+      "decision": null
+    },
+    {
+      "id": "05-decide-duplicate",
+      "title": "人工裁定（互相冲突的决定）：重复 NodeId 选边",
+      "kind": "decision",
+      "branch": "boundary",
+      "files": [
+        "files/base/base-ua.xml",
+        "files/boiler/v2.xml",
+        "files/skid/v2.xml",
+        "files/optional/edge-pack.xml"
+      ],
+      "base_step": "04-boundary-load",
+      "description": "审阅者比较 skid v2 与 edge-pack 对 ns=1;i=4001 的两条候选，选择 skid v2 版本继续；未选候选保留。再做一次冲突决定时系统返回可解决冲突而不是覆盖历史。",
+      "expected_events": ["duplicate_nodeid", "duplicate_resolved"],
+      "decision": {
+        "subject_kind": "duplicate",
+        "subject_match": "urn:nscompass:demo:skid",
+        "choice": "__pick-skid-v2__",
+        "expect_conflict_with": null
+      }
+    }
+  ]
+}

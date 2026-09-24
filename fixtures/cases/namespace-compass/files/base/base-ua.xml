@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Minimal OPC UA foundation NodeSet fragment shipped inside the offline
+     case pack. It defines only the reference types and base node classes the
+     namespace-compass story uses. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           LastModified="2026-09-01T00:00:00Z">
+  <NamespaceUris />
+  <Models>
+    <Model ModelUri="http://opcfoundation.org/UA/" Version="1.05.0" PublicationDate="2022-11-01T00:00:00Z" />
+  </Models>
+  <UAObjectType NodeId="i=58" BrowseName="BaseObjectType">
+    <DisplayName>BaseObjectType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=46</Reference>
+    </References>
+  </UAObjectType>
+  <UADataType NodeId="i=24" BrowseName="BaseDataType">
+    <DisplayName>BaseDataType</DisplayName>
+  </UADataType>
+  <UAReferenceType NodeId="i=46" BrowseName="HierarchicalReferences">
+    <DisplayName>HierarchicalReferences</DisplayName>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=47" BrowseName="HasComponent">
+    <DisplayName>HasComponent</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=46</Reference>
+    </References>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=45" BrowseName="HasSubtype">
+    <DisplayName>HasSubtype</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45" IsForward="false">i=46</Reference>
+    </References>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=35" BrowseName="Organizes">
+    <DisplayName>Organizes</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=46</Reference>
+    </References>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=40" BrowseName="HasTypeDefinition">
+    <DisplayName>HasTypeDefinition</DisplayName>
+  </UAReferenceType>
+</UANodeSet>

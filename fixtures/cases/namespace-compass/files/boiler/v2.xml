@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Revision 2: parameter change (setpoint 10.5 bar -> 9.8 bar), WaterFilter
+     type/instance removed (leaves a dangling reference from skid), a new
+     locally-scoped pump component, and a new vendor extension. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:nc="urn:nscompass:extensions:v1"
+           LastModified="2026-09-10T08:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:nscompass:demo:boiler</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:nscompass:demo:boiler" Version="1.1.0" PublicationDate="2026-09-10T00:00:00Z">
+      <RequiredModel>
+        <Model ModelUri="http://opcfoundation.org/UA/" Version="1.05.0" PublicationDate="2022-11-01T00:00:00Z" />
+      </RequiredModel>
+    </Model>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=1001" IsAbstract="false">
+    <DisplayName>BoilerType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=58</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=1101</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=1102</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=1104</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariable NodeId="ns=1;i=1101" DataType="i=290" AccessLevel="3">
+    <DisplayName>Drum Pressure Setpoint</DisplayName>
+    <Description>Operating pressure target in bar (revised after tuning pass).</Description>
+    <References>
+      <Reference ReferenceType="i=40">i=63</Reference>
+      <Reference ReferenceType="i=45" IsForward="false">ns=1;i=1001</Reference>
+    </References>
+    <Value>9.8</Value>
+    <nc:EngineeringUnit unit="bar" nc:ruleSet="rules-2026.09.0" />
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=1102" DataType="i=290" AccessLevel="3">
+    <DisplayName>Feed Temperature</DisplayName>
+    <Value>420</Value>
+    <nc:EngineeringUnit unit="degC" />
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=1103" DataType="i=290" AccessLevel="3">
+    <DisplayName>Exhaust Opacity</DisplayName>
+    <Value>0.35</Value>
+    <nc:EngineeringUnit unit="furlong/fortnight" />
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=1104" DataType="i=290" AccessLevel="3">
+    <DisplayName>Feed Pump Speed Setpoint</DisplayName>
+    <Value>1450</Value>
+    <nc:EngineeringUnit unit="rpm" />
+  </UAVariable>
+  <UAObject NodeId="ns=1;i=2001">
+    <DisplayName>Boiler A</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=1;i=1001</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=2101</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;i=2101" DataType="i=290" AccessLevel="3">
+    <DisplayName>Drum Position</DisplayName>
+    <Value />
+    <nc:Coordinate frame="skid-deck-1" values="1.20;3.40;0.00" />
+  </UAVariable>
+  <nc:VendorNote note-id="BN-9">Tuning pass: pressure target lowered; pump loop added.</nc:VendorNote>
+</UANodeSet>

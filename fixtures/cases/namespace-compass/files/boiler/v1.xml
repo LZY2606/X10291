@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:nc="urn:nscompass:extensions:v1"
+           LastModified="2026-09-01T08:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:nscompass:demo:boiler</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:nscompass:demo:boiler" Version="1.0.0" PublicationDate="2026-09-01T00:00:00Z">
+      <RequiredModel>
+        <Model ModelUri="http://opcfoundation.org/UA/" Version="1.05.0" PublicationDate="2022-11-01T00:00:00Z" />
+      </RequiredModel>
+    </Model>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=1001" IsAbstract="false">
+    <DisplayName>BoilerType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=58</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=1101</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=1102</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariable NodeId="ns=1;i=1101" DataType="i=290" AccessLevel="3">
+    <DisplayName>Drum Pressure Setpoint</DisplayName>
+    <Description>Operating pressure target in bar.</Description>
+    <References>
+      <Reference ReferenceType="i=40">i=63</Reference>
+      <Reference ReferenceType="i=45" IsForward="false">ns=1;i=1001</Reference>
+    </References>
+    <Value>10.5</Value>
+    <nc:EngineeringUnit unit="bar" nc:ruleSet="rules-2026.09.0" />
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=1102" DataType="i=290" AccessLevel="3">
+    <DisplayName>Feed Temperature</DisplayName>
+    <Value>420</Value>
+    <nc:EngineeringUnit unit="degC" />
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=1103" DataType="i=290" AccessLevel="3">
+    <DisplayName>Exhaust Opacity</DisplayName>
+    <Value>0.35</Value>
+    <nc:EngineeringUnit unit="furlong/fortnight" />
+  </UAVariable>
+  <UAObject NodeId="ns=1;i=2001">
+    <DisplayName>Boiler A</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=1;i=1001</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=2101</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;i=2101" DataType="i=290" AccessLevel="3">
+    <DisplayName>Drum Position</DisplayName>
+    <Value />
+    <nc:Coordinate frame="skid-deck-1" values="1.20;3.40;0.00" />
+  </UAVariable>
+  <UAObjectType NodeId="ns=1;i=1002">
+    <DisplayName>WaterFilterType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=58</Reference>
+    </References>
+  </UAObjectType>
+  <UAObject NodeId="ns=1;i=2002">
+    <DisplayName>Filter FK-101</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=1;i=1002</Reference>
+    </References>
+  </UAObject>
+  <nc:VendorNote note-id="BN-7">Boiler line tuned for skid deck baseline.</nc:VendorNote>
+</UANodeSet>

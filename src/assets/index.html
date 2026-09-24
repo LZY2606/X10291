@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>命名空间罗盘 · Namespace Compass</title>
+<link rel="stylesheet" href="/assets/app.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧭 命名空间罗盘 <span class="subtitle">OPC UA NodeSet 合并 · 引用闭包 · 模型差异</span></div>
+  <div class="controls">
+    <label>分支
+      <select id="branch">
+        <option value="main">main</option>
+        <option value="boundary">boundary</option>
+      </select>
+    </label>
+    <label>历史版本
+      <select id="version"><option value="">当前</option></select>
+    </label>
+    <button id="btn-diff" title="比较 main 与 boundary">比较两分支</button>
+    <a class="btn" href="/api/export" target="_blank">导出</a>
+    <button id="btn-import">导入</button>
+    <input type="file" id="import-file" accept="application/json" hidden />
+  </div>
+</header>
+
+<section class="tour">
+  <div class="tour-head">
+    <strong>九十秒离线样例路径</strong>
+    <span id="tour-status" class="muted"></span>
+  </div>
+  <ol id="tour-steps" class="tour-steps"></ol>
+</section>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="namespaces" class="active">Namespace 映射</button>
+  <button data-tab="types">类型层次</button>
+  <button data-tab="graph">引用图</button>
+  <button data-tab="unresolved">未解析依赖</button>
+  <button data-tab="diff">语义差异</button>
+  <button data-tab="events">判定事件</button>
+  <button data-tab="extensions">未识别扩展</button>
+</nav>
+
+<main>
+  <section id="tab-namespaces" class="tab active"></section>
+  <section id="tab-types" class="tab"></section>
+  <section id="tab-graph" class="tab">
+    <div class="graph-wrap"><svg id="graph" viewBox="0 0 960 520"></svg></div>
+  </section>
+  <section id="tab-unresolved" class="tab"></section>
+  <section id="tab-diff" class="tab"></section>
+  <section id="tab-events" class="tab"></section>
+  <section id="tab-extensions" class="tab"></section>
+</main>
+
+<aside id="detail" class="detail hidden">
+  <div class="detail-head">
+    <strong>来源链 / Source chain</strong>
+    <button id="detail-close">×</button>
+  </div>
+  <div id="detail-body"></div>
+</aside>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/assets/app.js"></script>
+</body>
+</html>

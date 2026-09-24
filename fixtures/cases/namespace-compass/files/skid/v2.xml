@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Revision 2: local dependency edit only. Boiler namespace URI moves from
+     file-local index 2 to index 3 (namespace re-ordering) even though it is
+     the same URI, and the removed filter now dangles. Skid version 1.1.0
+     pins boiler 1.1.0. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           LastModified="2026-09-11T00:00:00Z">
+  <NamespaceUris>
+    <Uri>urn:nscompass:demo:skid</Uri>
+    <Uri>urn:nscompass:demo:aux-cooling</Uri>
+    <Uri>urn:nscompass:demo:boiler</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:nscompass:demo:skid" Version="1.1.0" PublicationDate="2026-09-11T00:00:00Z">
+      <RequiredModel>
+        <Model ModelUri="http://opcfoundation.org/UA/" Version="1.05.0" />
+        <Model ModelUri="urn:nscompass:demo:boiler" Version="1.1.0" />
+      </RequiredModel>
+    </Model>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=3001">
+    <DisplayName>SkidAssemblyType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45">i=58</Reference>
+      <Reference ReferenceType="i=47">ns=3;i=2001</Reference>
+      <Reference ReferenceType="i=47">ns=3;i=2002</Reference>
+      <Reference ReferenceType="i=47">ns=1;i=3101</Reference>
+    </References>
+  </UAObjectType>
+  <UAObject NodeId="ns=1;i=3101">
+    <DisplayName>Cooling Manifold</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">i=58</Reference>
+    </References>
+  </UAObject>
+  <UAObject NodeId="ns=1;i=4001">
+    <DisplayName>Skid S-1</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=1;i=3001</Reference>
+      <Reference ReferenceType="i=35">ns=3;i=2001</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>
