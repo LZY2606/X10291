@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parameter revision: TempSensor1 setpoint 25 -> 30 degC. Everything else identical. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+    <Uri>urn:compass:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:line" Version="1.0.1" PublicationDate="2026-03-01T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">ns=2;i=3001</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=1001" BrowseName="1:Line1">
+    <DisplayName>Line 1</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;i=1101</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;i=1201</Reference>
+    </References>
+  </UAObject>
+  <UAObject NodeId="ns=1;i=1101" BrowseName="1:Machine1">
+    <DisplayName>Machine 1</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=2;i=2001</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;i=1201" BrowseName="1:TempSensor1">
+    <DisplayName>Temperature Sensor 1</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+    </References>
+    <Extensions>
+      <Extension>
+        <Quantity value="30" unit="degC" basis="line-frame"/>
+      </Extension>
+    </Extensions>
+    <VendorBlob xmlns="urn:compass:vendor" checksum="9f3a"/>
+  </UAVariable>
+</UANodeSet>

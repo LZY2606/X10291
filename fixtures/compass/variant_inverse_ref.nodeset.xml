@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: inverse-only references. Normalized to canonical
+     forward edges; no missing edges are fabricated. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+    <Uri>urn:compass:core</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasComponent">ns=2;i=3001</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=6101" BrowseName="1:InverseProbe">
+    <DisplayName>Inverse Probe</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=1001</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

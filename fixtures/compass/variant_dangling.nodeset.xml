@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: dangling reference. Points at ns=1;i=9999 which no
+     imported file declares (as if deleted after export). The target is kept
+     as an unresolved placeholder node. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+    <Uri>urn:compass:core</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="Monitors">ns=2;i=3002</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=6401" BrowseName="1:DanglingProbe">
+    <DisplayName>Dangling Probe</DisplayName>
+    <References>
+      <Reference ReferenceType="Monitors">ns=1;i=9999</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

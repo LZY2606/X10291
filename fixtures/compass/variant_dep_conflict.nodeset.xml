@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: dependency version conflict. Requires line v2.0.0
+     while line v1.0.0 is provided. Both claims are kept. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:conflicting" Version="1.0.0">
+      <RequiredModel ModelUri="urn:compass:line" Version="2.0.0"/>
+    </Model>
+  </Models>
+  <UAObject NodeId="ns=1;i=6201" BrowseName="1:ConflictProbe">
+    <DisplayName>Conflict Probe</DisplayName>
+  </UAObject>
+</UANodeSet>

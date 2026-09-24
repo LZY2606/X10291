@@ -1,0 +1,22 @@
+[package]
+name = "namespace-compass"
+version = "0.1.0"
+edition = "2021"
+description = "命名空间罗盘: OPC UA NodeSet merge, reference closure and model diff workbench"
+
+[lib]
+name = "compass"
+path = "src/lib.rs"
+
+[[bin]]
+name = "namespace-compass"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+quick-xml = "0.31"
+anyhow = "1"

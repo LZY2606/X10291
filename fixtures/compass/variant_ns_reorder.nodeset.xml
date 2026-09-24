@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: namespace reorder. Same URIs as station file but in
+     yet another order; local indices must never leak across files. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:station</Uri>
+    <Uri>urn:compass:core</Uri>
+    <Uri>urn:compass:line</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:reorder" Version="1.0.0">
+      <RequiredModel ModelUri="urn:compass:line" Version="1.0.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Monitors">ns=2;i=3002</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=5901" BrowseName="1:ReorderProbe">
+    <DisplayName>Reorder Probe</DisplayName>
+    <References>
+      <Reference ReferenceType="Monitors">ns=3;i=1201</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: duplicate NodeId. Redeclares line's Machine1
+     (urn:compass:line;i=1101) with a different DisplayName. Both candidates
+     are kept; none is preferred. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+  </NamespaceUris>
+  <UAObject NodeId="ns=1;i=1101" BrowseName="1:Machine1">
+    <DisplayName>Machine 1 (shadow)</DisplayName>
+  </UAObject>
+</UANodeSet>

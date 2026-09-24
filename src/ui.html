@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>命名空间罗盘 · OPC UA NodeSet 合并 / 引用闭包 / 模型差异</title>
+<style>
+:root{--bg:#0f141b;--panel:#182029;--line:#2a3644;--fg:#d7e0ea;--dim:#8496a8;--acc:#4fb3ff;--warn:#ffb454;--bad:#ff6b6b;--ok:#5fd68a;}
+*{box-sizing:border-box}
+body{margin:0;font:13px/1.5 "SF Mono",Menlo,Consolas,monospace;background:var(--bg);color:var(--fg)}
+header{display:flex;gap:8px;align-items:center;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+header h1{font-size:15px;margin:0 12px 0 0;color:var(--acc)}
+button,select,input,textarea{background:#0d1319;color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:4px 8px;font:inherit}
+button{cursor:pointer}button:hover{border-color:var(--acc)}
+button.primary{border-color:var(--acc);color:var(--acc)}
+nav{display:flex;gap:2px;padding:0 12px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+nav button{border:none;background:none;padding:8px 10px;color:var(--dim)}
+nav button.on{color:var(--acc);border-bottom:2px solid var(--acc)}
+main{padding:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;margin-bottom:12px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--line);padding:3px 8px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:normal}
+.sid{color:var(--dim);font-size:11px}
+.warn{color:var(--warn)}.bad{color:var(--bad)}.ok{color:var(--ok)}.acc{color:var(--acc)}
+pre{white-space:pre-wrap;word-break:break-all;background:#0b1016;border:1px solid var(--line);border-radius:4px;padding:8px;margin:4px 0}
+pre.src .hl{background:#3a2c10;display:block;margin:0 -8px;padding:0 8px}
+pre.src span{display:block}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:3px;padding:0 5px;margin:1px 2px;font-size:11px}
+.tag.e{border-color:var(--warn);color:var(--warn)}
+.tag.d{border-color:var(--bad);color:var(--bad)}
+.tag.o{border-color:var(--ok);color:var(--ok)}
+#detail{position:fixed;right:0;top:0;bottom:0;width:44%;background:var(--panel);border-left:1px solid var(--line);padding:12px;overflow:auto;display:none;z-index:5}
+#banner{display:none;background:#3a2c10;border:1px solid var(--warn);border-radius:6px;padding:10px;margin-bottom:12px}
+ul.tree{list-style:none;padding-left:18px}ul.tree li{margin:2px 0}
+a{color:var(--acc);cursor:pointer;text-decoration:none}
+svg text{fill:var(--fg);font-size:10px}
+.guide{color:var(--dim);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>命名空间罗盘</h1>
+  <span class="guide">OPC UA NodeSet 合并 · 引用闭包 · 模型差异</span>
+  <label>版本 <select id="vsel"></select></label>
+  <button class="primary" onclick="runDemo()">运行演示案例</button>
+  <button onclick="doExport()">导出档案</button>
+  <button onclick="document.getElementById('impfile').click()">导入档案</button>
+  <input type="file" id="impfile" style="display:none" onchange="doImport(this)">
+  <span id="ptr" class="sid"></span>
+</header>
+<nav id="tabs"></nav>
+<main>
+  <div id="banner"></div>
+  <div class="panel guide" id="guide">
+    短样例路径（约 90 秒）：① 点「运行演示案例」→ ② 「事件」页看 namespace 重排 / alias 循环 / 重复 NodeId / 逆向引用 / 依赖冲突 / 未知扩展 / 悬空引用七条反例 → ③ 「差异」页选 v1 与当前版比较 → ④ 点任意异常行的「来源」跳到源 XML 行范围 → ⑤ 「分支」页对冲突候选点「继续此分支」→ ⑥ 在版本下拉选旧版本即重放当时结论。
+  </div>
+  <div id="view"></div>
+</main>
+<div id="detail"></div>
+<script>
+let STATE=null, CUR=null, TAB='overview', DIFFA=null, DIFFB=null, SRC={file:null,lo:0,hi:0};
+const TABS=[['overview','总览/命名空间'],['types','类型层次'],['graph','引用图'],['unresolved','未解析/异常'],['diff','语义差异'],['events','事件/重放'],['branches','分支'],['source','源 XML'],['edit','编辑']];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sid=s=>`<span class="sid">${esc(s)}</span>`;
+async function api(p,opt){const r=await fetch(p,opt?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(opt)}:undefined);
+  if(!r.ok)throw new Error(await r.text());return r.json();}
+async function refresh(){STATE=await api('/api/state');
+  const sel=document.getElementById('vsel');sel.innerHTML=STATE.versions.map(v=>
+    `<option value="${v.id}" ${v.id===(CUR??STATE.pointer)?'selected':''}>v${v.id} ${esc(v.label)}${v.id===STATE.pointer?' ◀当前':''}</option>`).join('');
+  if(CUR==null)CUR=STATE.pointer;
+  document.getElementById('ptr').textContent='当前指针: v'+STATE.pointer;
+  await loadVersion(CUR);}
+async function loadVersion(id){CUR=id;CUR.data=await api('/api/versions/'+id);render();}
+function tabNav(){document.getElementById('tabs').innerHTML=TABS.map(([k,n])=>
+  `<button class="${k===TAB?'on':''}" onclick="TAB='${k}';render()">${n}</button>`).join('');}
+function render(){tabNav();const v=document.getElementById('view');
+  v.innerHTML={overview,types,graph,unresolved,diff,events,branches,source,edit}[TAB]();
+  if(TAB==='graph')drawGraph();if(TAB==='source')renderSource();}
+const M=()=>CUR.data.model, D=()=>CUR.data.derivation;
+function nodeBySid(s){return M().nodes.find(n=>n.stable_id===s)}
+function bn(s){const n=nodeBySid(s);return n?n.browse_name_text||n.display_name||s:s}

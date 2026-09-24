@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 命名空间罗盘 case pack: station model (urn:compass:station v1.0.0).
+     Namespace table order here is [core, line, station]: the SAME URIs get
+     DIFFERENT local indices than in line.nodeset.xml. Merge remaps by URI. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:core</Uri>
+    <Uri>urn:compass:line</Uri>
+    <Uri>urn:compass:station</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:station" Version="1.0.0" PublicationDate="2026-02-15T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:line" Version="1.0.0" PublicationDate="2026-02-01T00:00:00Z"/>
+      <RequiredModel ModelUri="urn:compass:core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Monitors">ns=1;i=3002</Alias>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=3;i=5001" BrowseName="3:Station1">
+    <DisplayName>Station 1</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+      <Reference ReferenceType="Monitors">ns=2;i=1201</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=3;i=5101" BrowseName="3:CabinetTemp">
+    <DisplayName>Cabinet Temperature</DisplayName>
+    <Extensions>
+      <Extension>
+        <Quantity value="77" unit="degF" basis="station-frame"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+  <UAVariable NodeId="ns=3;i=5102" BrowseName="3:ConveyorLength">
+    <DisplayName>Conveyor Length</DisplayName>
+    <Extensions>
+      <Extension>
+        <Quantity value="2.5" unit="furlong" basis="station-frame"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+</UANodeSet>

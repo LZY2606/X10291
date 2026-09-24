@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 命名空间罗盘 case pack: core type model (urn:compass:core v1.0.0) -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasSubtype">i=45</Alias>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <UAReferenceType NodeId="ns=1;i=3001" BrowseName="1:HasComponent">
+    <DisplayName>HasComponent</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=33</Reference>
+    </References>
+  </UAReferenceType>
+  <UAReferenceType NodeId="ns=1;i=3002" BrowseName="1:Monitors">
+    <DisplayName>Monitors</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=33</Reference>
+    </References>
+  </UAReferenceType>
+  <UAObjectType NodeId="ns=1;i=2001" BrowseName="1:MachineType">
+    <DisplayName>MachineType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+    </References>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;i=2002" BrowseName="1:SensorType">
+    <DisplayName>SensorType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+    </References>
+  </UAObjectType>
+</UANodeSet>

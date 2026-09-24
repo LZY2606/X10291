@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: alias cycle LoopA -> LoopB -> LoopA. The reference
+     using LoopA stays raw; the cycle is reported, never silently cut. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="LoopA">LoopB</Alias>
+    <Alias Alias="LoopB">LoopA</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=6001" BrowseName="1:CycleProbe">
+    <DisplayName>Cycle Probe</DisplayName>
+    <References>
+      <Reference ReferenceType="LoopA">ns=1;i=1101</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

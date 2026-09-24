@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local source change: adds Valve1 under Station1. Only the station
+     subtree is affected; line-derived facts must stay valid. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:core</Uri>
+    <Uri>urn:compass:line</Uri>
+    <Uri>urn:compass:station</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:station" Version="1.0.1" PublicationDate="2026-03-10T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:line" Version="1.0.0" PublicationDate="2026-02-01T00:00:00Z"/>
+      <RequiredModel ModelUri="urn:compass:core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Monitors">ns=1;i=3002</Alias>
+    <Alias Alias="HasComponent">ns=1;i=3001</Alias>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=3;i=5001" BrowseName="3:Station1">
+    <DisplayName>Station 1</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+      <Reference ReferenceType="Monitors">ns=2;i=1201</Reference>
+      <Reference ReferenceType="HasComponent">ns=3;i=5201</Reference>
+    </References>
+  </UAObject>
+  <UAObject NodeId="ns=3;i=5201" BrowseName="3:Valve1">
+    <DisplayName>Valve 1</DisplayName>
+  </UAObject>
+  <UAVariable NodeId="ns=3;i=5101" BrowseName="3:CabinetTemp">
+    <DisplayName>Cabinet Temperature</DisplayName>
+    <Extensions>
+      <Extension>
+        <Quantity value="77" unit="degF" basis="station-frame"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+  <UAVariable NodeId="ns=3;i=5102" BrowseName="3:ConveyorLength">
+    <DisplayName>Conveyor Length</DisplayName>
+    <Extensions>
+      <Extension>
+        <Quantity value="2.5" unit="furlong" basis="station-frame"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+</UANodeSet>

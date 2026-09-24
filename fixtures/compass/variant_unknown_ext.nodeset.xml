@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Counter-example: unknown extension <OrbitShim>. Preserved verbatim. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:line</Uri>
+  </NamespaceUris>
+  <UAObject NodeId="ns=1;i=6301" BrowseName="1:ExtensionProbe">
+    <DisplayName>Extension Probe</DisplayName>
+    <OrbitShim xmlns="urn:vendor:orbit" spin="9" tilt="0.25"/>
+  </UAObject>
+</UANodeSet>
