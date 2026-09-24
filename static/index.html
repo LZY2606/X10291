@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>命名空间罗盘：OPC UA NodeSet 合并与差异</title>
+<style>
+:root{--bg:#0f172a;--panel:#111c33;--panel2:#16233f;--ink:#e5edf8;--muted:#9db0c8;--line:#2b3d5e;--accent:#7dd3fc;--ok:#86efac;--warn:#fde68a;--bad:#fca5a5}*{box-sizing:border-box}body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}header{padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#101827,#172554)}h1{margin:0 0 6px;font-size:22px}h2{font-size:15px;margin:0 0 10px;color:var(--accent)}main{display:grid;grid-template-columns:310px 1fr;min-height:calc(100vh - 76px)}.side{border-right:1px solid var(--line);padding:16px;background:#0c1526;overflow:auto}.work{padding:16px;overflow:auto}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:14px}.wide{grid-column:1/-1}button{background:#075985;color:white;border:1px solid #38bdf8;border-radius:8px;padding:7px 10px;margin:3px;cursor:pointer}button.secondary{background:#1e293b;border-color:#64748b}button:disabled{opacity:.45;cursor:not-allowed}select,input,textarea{width:100%;background:#0b1220;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px;margin:4px 0 9px}.muted{color:var(--muted)}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 8px;margin:2px;font-size:12px}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid var(--line);padding:7px;text-align:left;vertical-align:top}th{color:#bae6fd}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}.scroll{max-height:310px;overflow:auto}pre{white-space:pre-wrap;background:#071120;border:1px solid var(--line);border-radius:8px;padding:10px;max-height:330px;overflow:auto}.timeline button{display:block;width:calc(100% - 6px);text-align:left}.tag{font-size:11px;color:#082f49;background:#bae6fd;border-radius:4px;padding:1px 5px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.source{cursor:pointer;color:#93c5fd;text-decoration:underline dotted}
+</style>
+</head>
+<body>
+<header><h1>命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异</h1><div class="muted">九十秒样例：基线 → 参数修订 → 局部依赖改动 → 边界重放 → 分支裁定。所有展示身份可复制，点击来源范围回到 XML。</div></header>
+<main><aside class="side">
+<div class="card"><h2>可重放路径</h2><div id="timeline" class="timeline"></div></div>
+<div class="card"><h2>分支与候选</h2><div id="branches"></div><div class="row"><button onclick="rejectCandidate()">保留异常/否定当前候选</button><button onclick="acceptCandidate()">接受并生成新版本</button></div></div>
+<div class="card"><h2>档案操作</h2><button onclick="exportData()">导出档案</button><button class="secondary" onclick="document.getElementById('importFile').click()">删除库后导入档案</button><input id="importFile" type="file" accept="application/json" hidden onchange="importData(event)"><div id="ioStatus" class="muted"></div></div>
+</aside><section class="work">
+<div class="card wide"><h2>当前版本</h2><div id="versionHead"></div></div>
+<div class="grid">
+<div class="card"><h2>Namespace 映射</h2><div id="namespaces" class="scroll"></div></div>
+<div class="card"><h2>类型层次</h2><div id="types" class="scroll"></div></div>
+<div class="card"><h2>引用图</h2><div id="graph" class="scroll"></div></div>
+<div class="card"><h2>未解析依赖 / Alias / 模型依赖</h2><div id="unresolved" class="scroll"></div></div>
+<div class="card wide"><h2>语义差异与事实传播</h2><div id="changes" class="scroll"></div></div>
+<div class="card wide"><h2>机器可读事件：采纳与未采纳候选均保留</h2><div id="events" class="scroll"></div></div>
+<div class="card wide"><h2>原 XML 范围</h2><div id="sourceBox" class="muted">点击任何带来源的对象查看原始 XML 片段。</div></div>
+</div></section></main>
+<script>
+let versions=[], state=null, selectedVersion=null, selectedCandidate='';
+const $=id=>document.getElementById(id);
+async function load(){versions=await fetch('/api/versions').then(r=>r.json()); if(!selectedVersion && versions.length) selectedVersion=versions[versions.length-1].version_id; renderTimeline(); await loadState();}
+async function loadState(){state=await fetch(`/api/state?version=${selectedVersion}`).then(r=>r.json()); render();}
+function renderTimeline(){$('timeline').innerHTML=versions.map(v=>`<button class="${v.version_id===selectedVersion?'':'secondary'}" onclick="selectedVersion=${v.version_id};loadState()"><span class="tag">v${v.version_id}</span><br>${v.label}<br><span class="muted">${v.branch_id} · ${v.kind} · ${v.parameters.rule_version}</span></button>`).join('')}
+function esc(v){return String(v??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function sourceLink(r){return r?`<span class="source" onclick="showSource('${r.source_id}',${r.start},${r.end})">${esc(r.file_name)} [${r.start}..${r.end}]</span>`:''}
+function table(cols, rows){return `<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`}
+function render(){const s=state.snapshot, v=state.record;$('versionHead').innerHTML=`<div class="row"><span class="pill">v${v.version_id}</span><b>${esc(v.label)}</b><span class="pill">${v.branch_id}</span><span class="pill">${v.parameters.rule_version}</span><span class="pill">压力单位 ${v.parameters.pressure_unit}</span></div><div class="muted">父版本：${v.parent_id??'—'}；源文件：${state.sources.map(x=>x.file_name).join(', ')}</div>`;
+$('namespaces').innerHTML=table(['稳定身份','文件索引','URI','来源'],s.namespaces.map(n=>[`<span class="mono">${esc(n.stable_id)}</span>`,n.file_index,`<span class="mono">${esc(n.uri)}</span>`,sourceLink(n.range)]));
+const types=s.nodes.filter(n=>n.kind.includes('Type')||n.kind==='UADataType'||n.kind==='UAReferenceType');$('types').innerHTML=table(['稳定身份','NodeId','BrowseName','类型'],types.map(n=>[id(n.stable_id),id(n.expanded_node_id),`${esc(n.browse_name.namespace_uri)}#${esc(n.browse_name.name)}`,n.kind]));
+$('graph').innerHTML=table(['边身份','源','目标','引用类型','方向/状态','来源'],s.references.map(r=>[id(r.stable_id),id(r.source_node),id(r.target_node),id(r.reference_type),`${r.direction}<br>${stateKind(r.state)}`,sourceLink(r.range)]));
+$('unresolved').innerHTML=table(['对象','稳定身份','原因/入边','来源'],s.unresolved_nodes.map(u=>[id(u.expanded_node_id),id(u.stable_id),u.reason+'<br>'+u.referenced_by.map(id).join('<br>'),'']).concat(s.aliases.map(a=>[id(a.name),id(a.resolved_node_id??'unresolved'),JSON.stringify(a.state),sourceLink(a.range)])).concat(s.requirements.map(d=>[id(d.model_uri),d.required_version,'actual: '+(d.actual_version??'missing')+'<br>'+JSON.stringify(d.state),sourceLink(d.range)])));
+$('changes').innerHTML=table(['差异稳定身份','类型','对象','前/后'],state.changes.map(c=>[id(c.stable_id),c.kind,id(c.subject_id),`<details><summary>值</summary><pre>${esc(c.before)} → ${esc(c.after)}</pre></details>`]));
+$('events').innerHTML=table(['事件','代码','采纳','主体','判断依据','来源'],s.events.map(e=>[id(e.event_id),`<b>${e.code}</b><br>${esc(e.message)}`,e.adopted?'<span class="ok">adopted</span>':'<span class="warn">retained</span>',id(e.subject_id),`${esc(e.basis)}<br><span class="mono">${esc(JSON.stringify(e.evidence))}</span>`,sourceLink(e.source_range)]));
+$('branches').innerHTML=versions.filter(x=>x.version_id===selectedVersion).map(x=>`<div class="muted">从冲突报告中可选择候选版本继续；确认会新建事件和版本，旧版本不覆盖。</div>`).join('');
+const open=s.events.find(e=>!e.adopted);if(open)selectedCandidate=open.subject_id;}
+function id(v){return `<span class="mono" title="${esc(v)}">${esc(v.length>64?v.slice(0,61)+'…':v)}</span>`}function stateKind(v){const k=v.kind;return k==='resolved'?'<span class="ok">resolved</span>':`<span class="bad">${esc(k)}</span>`}
+async function showSource(source_id,start,end){const q=new URLSearchParams({source_id,start,end});const r=await fetch('/api/source-range?'+q).then(r=>r.json());$('sourceBox').innerHTML=`<b>${esc(r.file_name)}</b> ${r.start}..${r.end}<pre>${esc(r.excerpt)}</pre>`}
+async function acceptCandidate(){await decide('accepted')}async function rejectCandidate(){await decide('rejected')}
+async function decide(decision){const body={expected_version:selectedVersion,decision,candidate_fact_id:selectedCandidate,label:`人工决定:${decision}`};const r=await fetch('/api/decide',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});if(r.status===409){alert('检测到并发版本冲突，请从候选版本选择，历史已保留。');return}const d=await r.json();selectedVersion=d.record.version_id;await load();}
+async function exportData(){const data=await fetch('/api/export').then(r=>r.blob());const a=document.createElement('a');a.href=URL.createObjectURL(data);a.download='namespace-compass-archive.json';a.click();$('ioStatus').textContent='档案已导出。';}
+async function importData(event){const content=await event.target.files[0].text();await fetch('/api/import-database',{method:'POST',headers:{'content-type':'application/json'},body:content});selectedVersion=null;await load();$('ioStatus').textContent='已从档案恢复身份、顺序和来源关系。';}
+load();
+</script></body></html>

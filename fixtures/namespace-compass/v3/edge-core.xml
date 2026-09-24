@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:domain="urn:factory:domain:2026">
+  <NamespaceUris><Uri>urn:factory:shared:2026</Uri><Uri>urn:factory:core:2026</Uri></NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:core:2026" Version="3.0">
+      <RequiredModel ModelUri="urn:factory:shared:2026" Version="9.9"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="cycleA">cycleB</Alias>
+    <Alias Alias="cycleB">cycleA</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=2;i=1001" BrowseName="2:Pump1001">
+    <DisplayName>Pump 1001</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent">ns=2;i=1101</Reference>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=2;i=8801</Reference>
+    </References>
+    <domain:Pressure Value="tbd" Unit="bar" CoordinateBasis="pump-flange:z-up">tbd</domain:Pressure>
+  </UAObject>
+  <UAObject NodeId="ns=2;i=1001" BrowseName="2:Pump1001DuplicateRaw">
+    <DisplayName>Pump 1001 duplicate raw declaration</DisplayName>
+    <References><Reference ReferenceType="HasTypeDefinition">ns=1;i=500</Reference></References>
+  </UAObject>
+  <UAVariable NodeId="ns=2;i=1101" BrowseName="2:OutletPressure">
+    <DisplayName>Outlet Pressure</DisplayName>
+  </UAVariable>
+  <domain:VendorTelemetry NodeId="vendor-1" Value="keep" CoordinateBasis="vendor-local"/>
+</UANodeSet>

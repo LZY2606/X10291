@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:domain="urn:factory:domain:2026">
+  <NamespaceUris><Uri>urn:factory:line:2026</Uri><Uri>urn:factory:shared:2026</Uri><Uri>urn:factory:core:2026</Uri></NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:line:2026" Version="1.1">
+      <RequiredModel ModelUri="urn:factory:core:2026" Version="2.1"/>
+      <RequiredModel ModelUri="urn:factory:shared:2026" Version="1.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Pump1001">ns=3;i=1001</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="LocatedIn">ns=2;i=300</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=2001" BrowseName="1:Line1">
+    <DisplayName>Line 1</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent">ns=1;i=3001</Reference>
+      <Reference ReferenceType="LocatedIn">Pump1001</Reference>
+    </References>
+    <domain:MaintenanceWindow Value="P3W" CoordinateBasis="plant-calendar">P3W</domain:MaintenanceWindow>
+  </UAObject>
+</UANodeSet>

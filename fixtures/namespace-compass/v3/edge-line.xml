@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:domain="urn:factory:domain:2026">
+  <NamespaceUris><Uri>urn:factory:line:2026</Uri><Uri>urn:factory:core:2026</Uri></NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:line:2026" Version="3.0">
+      <RequiredModel ModelUri="urn:factory:core:2026" Version="3.0"/>
+      <RequiredModel ModelUri="urn:factory:missing:kit" Version="4.2"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Pump1001">ns=2;i=1001</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="CycleAnchor">cycleA</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=3001" BrowseName="1:Sensor1001">
+    <DisplayName>Pressure Sensor 1001</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent" IsForward="false">Pump1001</Reference>
+      <Reference ReferenceType="HasComponent">cycle:CycleAnchor</Reference>
+      <Reference ReferenceType="HasComponent">ns=9;i=404</Reference>
+    </References>
+    <domain:Pressure Value="610" Unit="kPa" CoordinateBasis="sensor-port:x-forward">610</domain:Pressure>
+    <vendor:UnmappedBoard Revision="X7" CoordinateBasis="line-rack"/>
+  </UAObject>
+</UANodeSet>

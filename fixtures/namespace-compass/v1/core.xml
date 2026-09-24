@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:domain="urn:factory:domain:2026">
+  <NamespaceUris><Uri>urn:factory:core:2026</Uri><Uri>urn:factory:shared:2026</Uri></NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:factory:core:2026" Version="2.0">
+      <RequiredModel ModelUri="urn:factory:shared:2026" Version="1.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="PumpType">ns=2;i=500</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="Organizes">i=35</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=1001" BrowseName="1:Pump1001">
+    <DisplayName>Pump 1001</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">PumpType</Reference>
+      <Reference ReferenceType="Organizes">ns=1;i=9000</Reference>
+    </References>
+    <UAVariable NodeId="ns=1;i=1101" BrowseName="1:OutletPressure">
+      <DisplayName>Outlet Pressure</DisplayName>
+      <domain:Pressure Value="6.0" Unit="bar" CoordinateBasis="pump-flange:z-up">6.0</domain:Pressure>
+    </UAVariable>
+  </UAObject>
+  <UAVariableType NodeId="ns=1;i=6101" BrowseName="1:PressureVariableType">
+    <DisplayName>Pressure Variable Type</DisplayName>
+    <domain:Pressure Value="0.0" Unit="bar" CoordinateBasis="plant-grid">0.0</domain:Pressure>
+  </UAVariableType>
+</UANodeSet>
