@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Namespace Compass case: minimal OPC UA base companion, v1-->
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+  <NamespaceTable>
+    <Uri>http://opcfoundation.org/UA/</Uri>
+  </NamespaceTable>
+  <Models>
+    <Model ModelUri="http://opcfoundation.org/UA/" Version="1.05" PublicationDate="2020-01-01T00:00:00Z">
+      <RequiredModel ModelUri="urn:opc:foundation:legacy:no:fixture" Version="0.9"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Name="HasTypeDefinition">i=40</Alias>
+    <Alias Name="HasComponent">i=47</Alias>
+    <Alias Name="HasProperty">i=46</Alias>
+    <Alias Name="Organizes">i=35</Alias>
+    <Alias Name="HasSubtype">i=45</Alias>
+  </Aliases>
+
+  <UAObject NodeId="i=85" BrowseName="i=85">
+    <DisplayName>Objects</DisplayName>
+  </UAObject>
+
+  <UAReferenceType NodeId="i=45" BrowseName="i=45">
+    <DisplayName>HasSubtype</DisplayName>
+    <InverseName>SupertypeOf</InverseName>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=46" BrowseName="i=46">
+    <DisplayName>HasProperty</DisplayName>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=47" BrowseName="i=47">
+    <DisplayName>HasComponent</DisplayName>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=40" BrowseName="i=40">
+    <DisplayName>HasTypeDefinition</DisplayName>
+  </UAReferenceType>
+  <UAReferenceType NodeId="i=35" BrowseName="i=35">
+    <DisplayName>Organizes</DisplayName>
+  </UAReferenceType>
+
+  <UAObjectType NodeId="i=58" BrowseName="i=58">
+    <DisplayName>BaseObjectType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45" IsForward="false">i=0</Reference>
+    </References>
+    <X:CompassAnnotation xmlns:X="urn:compass:unknown:v1" CompassId="base-anno-1">
+      <X:Note>retained unknown extension under BaseObjectType</X:Note>
+    </X:CompassAnnotation>
+  </UAObjectType>
+
+  <UAVariableType NodeId="i=63" BrowseName="i=63">
+    <DisplayName>BaseDataVariableType</DisplayName>
+  </UAVariableType>
+</UANodeSet>

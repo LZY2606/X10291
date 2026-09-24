@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Namespace Compass case: units + signal companion, v1-->
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/02/Types.xsd"
+           xmlns:cu="http://test.org/CompassUnits/">
+  <NamespaceTable>
+    <Uri>http://opcfoundation.org/UA/</Uri>
+    <Uri>http://test.org/CompassUnits/</Uri>
+  </NamespaceTable>
+  <Models>
+    <Model ModelUri="http://test.org/CompassUnits/" Version="1.00" PublicationDate="2021-06-01T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05"/>
+      <RequiredModel ModelUri="urn:opc:foundation:legacy:no:fixture" Version="0.9"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Name="HasTypeDefinition">i=40</Alias>
+    <Alias Name="HasComponent">i=47</Alias>
+    <Alias Name="HasSubtype">i=45</Alias>
+    <Alias Name="SignalTypeAlias">ns=1;i=100</Alias>
+    <Alias Name="AliasLoopA">AliasLoopB</Alias>
+    <Alias Name="AliasLoopB">AliasLoopA</Alias>
+  </Aliases>
+
+  <UAObjectType NodeId="ns=1;i=100" BrowseName="1:SignalType">
+    <DisplayName>SignalType</DisplayName>
+    <References>
+      <Reference ReferenceType="i=45" IsForward="false">i=58</Reference>
+    </References>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;i=101" BrowseName="1:AnalogSignalType">
+    <DisplayName>AnalogSignalType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=1;i=100</Reference>
+    </References>
+  </UAObjectType>
+
+  <UAVariable NodeId="ns=1;i=200" BrowseName="1:EngineeringUnits" DataType="i=12" ParentNodeId="ns=1;i=101">
+    <DisplayName>EngineeringUnits</DisplayName>
+    <References>
+      <Reference ReferenceType="i=47">i=63</Reference>
+      <Reference ReferenceType="i=46" IsForward="false">ns=1;i=101</Reference>
+    </References>
+    <Value>
+      <uax:ExtensionObject>
+        <uax:TypeId><uax:Identifier>i=888</uax:Identifier></uax:TypeId>
+        <uax:Body>
+          <EUInformation xmlns="http://opcfoundation.org/UA/2008/02/Types.xsd">
+            <NamespaceUri>http://test.org/CompassUnits/</NamespaceUri>
+            <UnitId>131073</UnitId>
+            <DisplayName><Text>degC</Text></DisplayName>
+          </EUInformation>
+        </uax:Body>
+      </uax:ExtensionObject>
+    </Value>
+  </UAVariable>
+
+  <UAVariable NodeId="ns=1;i=201" BrowseName="1:CalibrationOffset" DataType="i=10">
+    <DisplayName>CalibrationOffset</DisplayName>
+    <Value><uax:Double>0.5</uax:Double></Value>
+    <cu:CompassQuantity xmlns:cu="http://test.org/CompassUnits/" unit="gorgons" coordinateBasis="site-local-north">3.7</cu:CompassQuantity>
+  </UAVariable>
+
+  <UAObject NodeId="ns=1;s=SensorGhost" BrowseName="1:SensorGhost">
+    <DisplayName>SensorGhost</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=1;s=DoesNotExistYet</Reference>
+      <Reference ReferenceType="i=47">AliasLoopA</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

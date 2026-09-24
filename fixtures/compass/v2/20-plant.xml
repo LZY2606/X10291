@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Namespace Compass case: plant model, v2 revision (parameter change only)-->
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           xmlns:p="http://test.org/PlantModel/">
+  <NamespaceTable>
+    <Uri>http://test.org/PlantModel/</Uri>
+    <Uri>http://opcfoundation.org/UA/</Uri>
+    <Uri>http://test.org/CompassUnits/</Uri>
+  </NamespaceTable>
+  <Models>
+    <Model ModelUri="http://test.org/PlantModel/" Version="2.11" PublicationDate="2022-09-01T00:00:00Z">
+      <RequiredModel ModelUri="http://test.org/CompassUnits/" Version="1.00"/>
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Name="HasTypeDefinition">i=40</Alias>
+    <Alias Name="HasComponent">i=47</Alias>
+    <Alias Name="HasProperty">i=46</Alias>
+    <Alias Name="Organizes">i=35</Alias>
+    <Alias Name="HasSubtype">i=45</Alias>
+    <Alias Name="FlowSensorTypeAlias">ns=2;i=101</Alias>
+  </Aliases>
+
+  <UAObjectType NodeId="ns=0;s=FlowSensorType" BrowseName="0:FlowSensorType">
+    <DisplayName>FlowSensorType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=2;i=101</Reference>
+    </References>
+  </UAObjectType>
+
+  <UAObject NodeId="ns=0;i=5001" BrowseName="0:LineA">
+    <DisplayName>Production Line A</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">i=85</Reference>
+    </References>
+  </UAObject>
+
+  <UAObject NodeId="ns=0;i=5002" BrowseName="0:TemperatureSensor1" Z:VendorFlag="experimental" xmlns:Z="urn:vendor:flags:v1">
+    <DisplayName>TemperatureSensor1</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">ns=0;s=FlowSensorType</Reference>
+      <Reference ReferenceType="i=47">ns=0;i=5001</Reference>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=0;i=5001</Reference>
+    </References>
+  </UAObject>
+
+  <UAVariable NodeId="ns=0;i=6001" BrowseName="0:TemperatureSetpoint" DataType="i=11" ParentNodeId="ns=0;i=5002">
+    <DisplayName>TemperatureSetpoint</DisplayName>
+    <References>
+      <Reference ReferenceType="i=46">ns=0;i=5002</Reference>
+    </References>
+    <Value><uax:Double>22.0</uax:Double></Value>
+    <p:CompassQuantity xmlns:p="http://test.org/PlantModel/" unit="kelvin" coordinateBasis="plant-room-wgs84">295.15</p:CompassQuantity>
+  </UAVariable>
+
+  <UAObject NodeId="ns=0;i=6001" BrowseName="0:DuplicateIdNode">
+    <DisplayName>DuplicateIdNode</DisplayName>
+  </UAObject>
+
+  <UAObject NodeId="ns=0;i=5003" BrowseName="0:DeletedSensor">
+    <DisplayName>DeletedSensor</DisplayName>
+    <References>
+      <Reference ReferenceType="i=40">FlowSensorTypeAlias</Reference>
+    </References>
+  </UAObject>
+
+  <X:CompassExtension xmlns:X="urn:compass:unknown:v1" Kind="vendor-payload">
+    <X:Payload>top-level unrecognized extension retained verbatim</X:Payload>
+  </X:CompassExtension>
+</UANodeSet>
