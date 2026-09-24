@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           xmlns:nc="https://compass.example/opcua/2026"
+           LastModified="2026-04-10T00:00:00Z">
+  <NamespaceUris>
+    <Uri>https://compass.example/UA/CompassBase/</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="https://compass.example/UA/CompassBase/" Version="1.0.0" PublicationDate="2026-02-02T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="Rotary">ns=1;s=TRotaryMachine</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=5001" BrowseName="Line1">
+    <DisplayName>Line 1 (restated by machines file)</DisplayName>
+  </UAObject>
+  <UAObject NodeId="ns=1;i=5002" BrowseName="MachineA">
+    <DisplayName>Machine A</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5001</Reference>
+      <Reference ReferenceType="HasTypeDefinition">Rotary</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;i=6001" BrowseName="SpeedSetpoint" DataType="i=29">
+    <DisplayName>Speed Setpoint</DisplayName>
+    <Value><uax:Int32>1500</uax:Int32></Value>
+    <nc:Unit>rpm</nc:Unit>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=6002" BrowseName="Pressure" DataType="i=10">
+    <DisplayName>Discharge Pressure</DisplayName>
+    <Value><uax:Double>1.5</uax:Double></Value>
+    <nc:Unit>bar</nc:Unit>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=6003" BrowseName="Location" DataType="i=11">
+    <DisplayName>Install Location On Plant Grid</DisplayName>
+    <Value><uax:Double>1.0</uax:Double></Value>
+    <nc:Datum Basis="PLANT-GRID">1.0;2.0;0.0</nc:Datum>
+  </UAVariable>
+  <UAVariableType NodeId="ns=1;s=ShadowType" BrowseName="ShadowKind">
+    <DisplayName>Shadow restated as VariableType: node class conflicts with base</DisplayName>
+  </UAVariableType>
+  <UAObject NodeId="ns=1;i=7002" BrowseName="FutureNode">
+    <DisplayName>Node referring into an undeclared local index</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">ns=9;i=1</Reference>
+    </References>
+  </UAObject>
+  <UAObject NodeId="ns=1;i=7003" BrowseName="AliasCycleProbe">
+    <DisplayName>Reference using an alias that participates in a cycle</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent">CycleA</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

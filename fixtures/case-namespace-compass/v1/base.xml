@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           xmlns:nc="https://compass.example/opcua/2026"
+           LastModified="2026-01-15T00:00:00Z">
+  <NamespaceUris>
+    <Uri>https://compass.example/UA/CompassBase/</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="https://compass.example/UA/CompassBase/" Version="1.0.0" PublicationDate="2026-01-15T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="SpeedNominal">s=NSpeedNominal</Alias>
+    <Alias Alias="CycleA">CycleB</Alias>
+    <Alias Alias="CycleB">CycleA</Alias>
+  </Aliases>
+  <UAObjectType NodeId="ns=1;s=TAsset" BrowseName="AssetType">
+            <DisplayName>Asset</DisplayName>
+            <References>
+      <Reference ReferenceType="HasSubtype">i=58</Reference>
+    </References>
+          </UAObjectType>
+  <UAObjectType NodeId="ns=1;s=TRotaryMachine" BrowseName="RotaryMachineType">
+    <DisplayName>Rotary Machine</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="true">ns=1;s=TAsset</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariableType NodeId="ns=1;i=6101" BrowseName="SpeedNominalType">
+    <DisplayName>Speed Nominal Type</DisplayName>
+  </UAVariableType>
+  <UAVariableType NodeId="ns=1;i=6102" BrowseName="VibeIndexType">
+    <DisplayName>Vibration Index Type</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype">ns=1;i=6101</Reference>
+    </References>
+  </UAVariableType>
+  <UAObjectType NodeId="ns=1;s=ShadowType" BrowseName="ShadowKind">
+    <DisplayName>Shadow declared as ObjectType in base</DisplayName>
+  </UAObjectType>
+  <UAObject NodeId="ns=1;i=5001" BrowseName="Line1">
+    <DisplayName>Line 1</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent">ns=1;i=5002</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;s=NSpeedNominal" BrowseName="SpeedNominal" DataType="i=29">
+    <DisplayName>Nominal Speed</DisplayName>
+    <Value><uax:Int32>1500</uax:Int32></Value>
+    <nc:Unit>rpm</nc:Unit>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;s=RawFlow" BrowseName="RawFlow" DataType="i=11">
+    <DisplayName>Raw Flow In Obsolete Unit</DisplayName>
+    <Value><uax:Double>7.0</uax:Double>
+    </Value>
+    <nc:Unit>firkins/minute</nc:Unit>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;s=GridOffset" BrowseName="GridOffset" DataType="i=11">
+    <DisplayName>Grid Offset On Unknown Basis</DisplayName>
+    <Value><uax:Double>4.2</uax:Double></Value>
+    <nc:Datum Basis="GRID-C">4.2;0.0;0.0</nc:Datum>
+  </UAVariable>
+  <nc:ProvenanceNote Source="lab1">baseline modeling note retained verbatim</nc:ProvenanceNote>
+</UANodeSet>

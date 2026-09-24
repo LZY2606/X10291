@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           xmlns:nc="https://compass.example/opcua/2026"
+           LastModified="2026-02-05T00:00:00Z">
+  <NamespaceUris>
+    <Uri>https://optics.example/UA/Server/</Uri>
+    <Uri>https://optics.example/UA/Client/</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="https://optics.example/UA/Server/" Version="2.0.0" PublicationDate="2026-02-05T00:00:00Z"/>
+  </Models>
+  <UAObject NodeId="ns=1;i=40" BrowseName="LensRail">
+    <DisplayName>Lens Rail</DisplayName>
+  </UAObject>
+  <UAObject NodeId="ns=1;i=50" BrowseName="LensArm">
+    <DisplayName>Lens Arm</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">ns=2;i=11</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

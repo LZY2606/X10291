@@ -1,0 +1,20 @@
+[package]
+name = "nodecompass"
+version = "0.1.0"
+edition = "2021"
+description = "Namespace Compass: replayable OPC UA NodeSet merge, reference closure and model diff tools"
+
+[lib]
+name = "nodecompass"
+path = "src/lib.rs"
+
+[[bin]]
+name = "nodecompass"
+path = "src/main.rs"
+
+[dependencies]
+axum = { version = "0.8", features = ["macros"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.37", features = ["bundled"] }

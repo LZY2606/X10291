@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd"
+           xmlns:nc="https://compass.example/opcua/2026"
+           LastModified="2026-04-11T00:00:00Z">
+  <NamespaceUris>
+    <Uri>https://optics.example/UA/Client/</Uri>
+    <Uri>https://optics.example/UA/Server/</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="https://optics.example/UA/Client/" Version="0.9.0" PublicationDate="2026-02-05T00:00:00Z">
+      <RequiredModel ModelUri="https://optics.example/UA/Server/" Version="2.1.0"/>
+      <RequiredModel ModelUri="https://compass.example/UA/CompassBase/" Version="1.0.0"/>
+      <RequiredModel ModelUri="https://vendor-missing.example/UA/VisionPack/" Version="3.0.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="LensAlias">ns=2;i=41</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;i=10" BrowseName="InspectionStation">
+    <DisplayName>Optics Inspection Station</DisplayName>
+    <References>
+      <Reference ReferenceType="Organizes">LensAlias</Reference>
+      <Reference ReferenceType="Organizes">ns=2;i=40</Reference>
+      <Reference ReferenceType="HasTypeDefinition">ns=2;i=42</Reference>
+    </References>
+  </UAObject>
+  <nc:VendorExtension Kind="unrecognized">vendor payload retained without interpretation</nc:VendorExtension>
+</UANodeSet>
