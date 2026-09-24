@@ -1,0 +1,16 @@
+[package]
+name = "namespace-compass"
+version = "0.1.0"
+edition = "2021"
+description = "命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+quick-xml = "0.37"
+
+[profile.release]
+opt-level = 1
