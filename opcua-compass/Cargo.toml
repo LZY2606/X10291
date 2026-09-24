@@ -1,0 +1,23 @@
+[package]
+name = "opcua-compass"
+version = "0.1.0"
+edition = "2021"
+description = "Replayable OPC UA NodeSet merge, reference closure and model diff tool"
+
+[[bin]]
+name = "opcua-compass"
+path = "src/main.rs"
+
+[lib]
+name = "opcua_compass"
+path = "src/lib.rs"
+
+[dependencies]
+axum = "0.7"
+rusqlite = { version = "0.31", features = ["bundled"] }
+tokio = { version = "1", features = ["rt-multi-thread", "net", "sync"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+quick-xml = "0.31"
+
+[dev-dependencies]
