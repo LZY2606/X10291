@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>http://compass.example/core</Uri>
+    <Uri>http://compass.example/lineB</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="http://compass.example/lineB" Version="1.0.0" PublicationDate="2026-02-10T00:00:00Z">
+      <RequiredModel ModelUri="http://compass.example/core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <UAObject NodeId="ns=2;i=7001" BrowseName="2:LineB">
+    <DisplayName>Line B</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=1;i=1000</Reference>
+      <Reference ReferenceType="HasComponent">ns=2;i=7002</Reference>
+      <Reference ReferenceType="HasComponent">ns=2;i=7003</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=2;i=7002" BrowseName="2:GaugeB2" DataType="i=11">
+    <DisplayName>Gauge B2</DisplayName>
+    <Value>1.2</Value>
+    <Extensions>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="bar" Basis="gauge"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+  <UAVariable NodeId="ns=2;i=7003" BrowseName="2:FlowB" DataType="i=11">
+    <DisplayName>Flow B</DisplayName>
+    <Value>3.0</Value>
+    <Extensions>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="m" Basis="site-grid"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+</UANodeSet>

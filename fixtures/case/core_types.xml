@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>http://compass.example/core</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasSubtype">i=45</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="http://compass.example/core" Version="1.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=1000" BrowseName="1:SensorType">
+    <DisplayName>SensorType</DisplayName>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;i=1001" BrowseName="1:AnalogSensorType">
+    <DisplayName>AnalogSensorType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=1;i=1000</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;i=2001</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariable NodeId="ns=1;i=2001" BrowseName="1:Temperature" DataType="i=11">
+    <DisplayName>Temperature</DisplayName>
+    <Value>23.5</Value>
+    <Extensions>
+      <Extension>
+        <VendorCalibration xmlns="http://vendor.example/calib" Accuracy="0.1">
+          <CalibratedAt>2026-01-15T00:00:00Z</CalibratedAt>
+        </VendorCalibration>
+      </Extension>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="degC" Basis="sensor-local"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+</UANodeSet>

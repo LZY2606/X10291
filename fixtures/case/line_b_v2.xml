@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>http://compass.example/core</Uri>
+    <Uri>http://compass.example/lineB</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="http://compass.example/lineB" Version="2.0.0" PublicationDate="2026-03-01T00:00:00Z">
+      <RequiredModel ModelUri="http://compass.example/core" Version="2.0.0" PublicationDate="2026-02-20T00:00:00Z"/>
+    </Model>
+  </Models>
+  <UAObject NodeId="ns=2;i=7001" BrowseName="2:LineB">
+    <DisplayName>Line B (rev2)</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=1;i=1000</Reference>
+      <Reference ReferenceType="HasComponent">ns=2;i=7003</Reference>
+      <Reference ReferenceType="HasComponent">ns=2;i=7004</Reference>
+      <Reference ReferenceType="Organizes">ns=1;i=2999</Reference>
+    </References>
+    <Extensions>
+      <Extension>
+        <VendorLock xmlns="http://vendor.example/lock" Key="AB-12"/>
+      </Extension>
+    </Extensions>
+  </UAObject>
+  <UAVariable NodeId="ns=2;i=7003" BrowseName="2:FlowB" DataType="i=11">
+    <DisplayName>Flow B</DisplayName>
+    <Value>3.5</Value>
+    <Extensions>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="m" Basis="site-grid"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+  <UAVariable NodeId="ns=2;i=7004" BrowseName="2:FlowRateB" DataType="i=11">
+    <DisplayName>Flow Rate B</DisplayName>
+    <Value>12.0</Value>
+    <Extensions>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="furlong/fortnight" Basis="legacy"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+  <UAVariable NodeId="ns=2;i=7004" BrowseName="2:FlowRateB" DataType="i=11">
+    <DisplayName>Flow Rate B (backup)</DisplayName>
+    <Value>9.5</Value>
+    <Extensions>
+      <Extension>
+        <EngineeringUnits xmlns="http://compass.example/quantity" Unit="furlong/fortnight" Basis="legacy"/>
+      </Extension>
+    </Extensions>
+  </UAVariable>
+</UANodeSet>
