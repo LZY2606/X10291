@@ -1,0 +1,26 @@
+[package]
+name = "nscompass"
+version = "0.1.0"
+edition = "2021"
+description = "Namespace Compass: OPC UA NodeSet merge, reference closure and model diff"
+
+[lib]
+name = "nscompass"
+path = "src/lib.rs"
+
+[[bin]]
+name = "nscompass"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
+rusqlite = { version = "0.37", features = ["bundled"] }
+quick-xml = "0.37"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["fs"] }
+
+[profile.dev]
+opt-level = 0
