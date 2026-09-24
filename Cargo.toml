@@ -1,0 +1,20 @@
+[package]
+name = "nodeset-compass"
+version = "0.1.0"
+edition = "2021"
+description = "命名空间罗盘：OPC UA NodeSet 合并、引用闭包与模型差异（可重放）"
+
+[dependencies]
+axum = { version = "0.7.5", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+quick-xml = "0.31"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tower = "0.4"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+panic = "unwind"
