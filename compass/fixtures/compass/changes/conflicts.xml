@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:conflicts</Uri>
+    <Uri>urn:compass:industrial:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:conflicts" Version="1.0.0">
+      <!-- Conflicts with baseline requirement core 1.0.0. -->
+      <RequiredModel ModelUri="urn:compass:industrial:core" Version="2.0.0"/>
+      <!-- Missing dependency: nothing supplies this namespace. -->
+      <RequiredModel ModelUri="urn:compass:industrial:safety-package" Version="3.1.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;s=SAFE-1" BrowseName="ns=1;SafetyCell1">
+    <DisplayName>Safety Cell 1</DisplayName>
+    <References>
+      <!-- Target in an unsupplied namespace => unresolved placeholder. -->
+      <Reference ReferenceType="HasComponent">ns=3;s=EmergencyStopType</Reference>
+      <!-- Target that will be deleted in the local-change step => dangling. -->
+      <Reference ReferenceType="HasComponent">ns=2;s=PumpType</Reference>
+    </References>
+  </UAObject>
+  <Extensions>
+    <cmp:UnknownGovernance policy="x">retained verbatim</cmp:UnknownGovernance>
+  </Extensions>
+</UANodeSet>

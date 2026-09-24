@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:core" Version="1.0.0"
+           PublicationDate="2026-01-15T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.04"
+                     PublicationDate="2017-11-22T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="HasSubtype">i=45</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <UAObjectType NodeId="ns=1;s=EquipmentType" IsAbstract="true"
+                BrowseName="ns=1;EquipmentType">
+    <DisplayName>EquipmentType</DisplayName>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;s=PumpType" BrowseName="ns=1;PumpType">
+    <DisplayName>PumpType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=1;s=EquipmentType</Reference>
+    </References>
+  </UAObjectType>
+  <UADataType NodeId="ns=1;s=PressureDataType" BrowseName="ns=1;PressureDataType">
+    <DisplayName>PressureDataType</DisplayName>
+  </UADataType>
+  <Extensions>
+    <cmp:VendorProfile profileId="core-profile-7">
+      <note>vendor-specific block; must be retained even when unknown</note>
+    </cmp:VendorProfile>
+  </Extensions>
+</UANodeSet>

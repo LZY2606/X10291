@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:aliastest</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="CycleA">CycleB</Alias>
+    <Alias Alias="CycleB">CycleA</Alias>
+    <Alias Alias="DanglingAlias">ns=1;s=NeverDefinedType</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;s=AliasHost" BrowseName="ns=1;AliasHost">
+    <DisplayName>Alias Host</DisplayName>
+    <References>
+      <Reference ReferenceType="CycleA">ns=1;s=AliasHost</Reference>
+      <Reference ReferenceType="DanglingAlias">ns=1;s=AliasHost</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

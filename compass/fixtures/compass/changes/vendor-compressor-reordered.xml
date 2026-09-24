@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <!-- Same two URIs as baseline, reversed order: core is now index 1 and
+         vendor is index 2. Every vendor node therefore moves ns=1 -> ns=2. -->
+    <Uri>urn:compass:industrial:core</Uri>
+    <Uri>urn:compass:industrial:vendor</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:vendor" Version="2.1.0"
+           PublicationDate="2026-02-01T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:industrial:core" Version="1.0.0"
+                     PublicationDate="2026-01-15T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+  </Aliases>
+  <UAObjectType NodeId="ns=2;s=CompressorType" BrowseName="ns=2;CompressorType">
+    <DisplayName>CompressorType</DisplayName>
+    <References>
+      <Reference ReferenceType="ns=1;s=PumpTypeAlias" IsForward="false">ns=1;s=PumpType</Reference>
+    </References>
+  </UAObjectType>
+  <UAObject NodeId="ns=2;s=CMP-101" BrowseName="ns=2;Compressor101">
+    <DisplayName>Compressor 101</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=2;s=CompressorType</Reference>
+      <Reference ReferenceType="HasComponent">ns=2;s=CMP-101:DischargePressure</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=2;s=CMP-101:DischargePressure" BrowseName="ns=2;DischargePressure">
+    <DisplayName>Discharge Pressure</DisplayName>
+    <cmp:Pressure Unit="bar">6.8</cmp:Pressure>
+  </UAVariable>
+  <!-- alias cycle: A -> B -> A -->
+  <UAVariable NodeId="ns=2;s=AliasProbe" BrowseName="ns=2;AliasProbe">
+    <DisplayName>Alias Probe</DisplayName>
+    <References>
+      <Reference ReferenceType="CycleA">ns=2;s=CMP-101</Reference>
+    </References>
+  </UAVariable>
+</UANodeSet>

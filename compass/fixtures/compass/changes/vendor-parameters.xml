@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Same source graph as baseline vendor file, but pressure represented in
+     kPa and a previously unconvertible reading is now provided in degC.
+     Used by the parameter/source revision step. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:vendor</Uri>
+    <Uri>urn:compass:industrial:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:vendor" Version="2.2.0"
+           PublicationDate="2026-03-20T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:industrial:core" Version="1.1.0"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <UAObject NodeId="ns=1;s=CMP-101" BrowseName="ns=1;Compressor101">
+    <DisplayName>Compressor 101</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent">ns=1;s=CMP-101:DischargePressure</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;s=CMP-101:DischargePressure" BrowseName="ns=1;DischargePressure">
+    <DisplayName>Discharge Pressure</DisplayName>
+    <cmp:Pressure Unit="kPa">680</cmp:Pressure>
+  </UAVariable>
+</UANodeSet>

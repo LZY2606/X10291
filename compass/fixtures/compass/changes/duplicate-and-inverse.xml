@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:vendor</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+  </Aliases>
+  <!-- Duplicate global NodeId: vendor CMP-101 is defined a second time. -->
+  <UAObject NodeId="ns=1;s=CMP-101" BrowseName="ns=1;Compressor101SecondCopy">
+    <DisplayName>Compressor 101 (second copy)</DisplayName>
+    <cmp:Pressure Unit="hPa">1013</cmp:Pressure>
+  </UAObject>
+  <!-- Inverse reference written from the child back to its parent. -->
+  <UAVariable NodeId="ns=1;s=CMP-202:InletValve" BrowseName="ns=1;InletValve">
+    <DisplayName>Inlet Valve</DisplayName>
+    <References>
+      <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=CMP-202</Reference>
+    </References>
+  </UAVariable>
+  <UAObject NodeId="ns=1;s=CMP-202" BrowseName="ns=1;Compressor202">
+    <DisplayName>Compressor 202</DisplayName>
+    <Extensions>
+      <cmp:FutureExtension rev="future-9">opaque payload xyz</cmp:FutureExtension>
+    </Extensions>
+  </UAObject>
+</UANodeSet>

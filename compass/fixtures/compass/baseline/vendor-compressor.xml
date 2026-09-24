@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:vendor</Uri>
+    <Uri>urn:compass:industrial:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:vendor" Version="2.1.0"
+           PublicationDate="2026-02-01T00:00:00Z">
+      <RequiredModel ModelUri="urn:compass:industrial:core" Version="1.0.0"
+                     PublicationDate="2026-01-15T00:00:00Z"/>
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.04"
+                     PublicationDate="2017-11-22T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <UAObjectType NodeId="ns=1;s=CompressorType" BrowseName="ns=1;CompressorType">
+    <DisplayName>CompressorType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=2;s=PumpType</Reference>
+    </References>
+  </UAObjectType>
+  <UAObject NodeId="ns=1;s=CMP-101" BrowseName="ns=1;Compressor101">
+    <DisplayName>Compressor 101</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">ns=1;s=CompressorType</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;s=CMP-101:DischargePressure</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;s=CMP-101:BearingTemp</Reference>
+    </References>
+  </UAObject>
+  <UAVariable NodeId="ns=1;s=CMP-101:DischargePressure" BrowseName="ns=1;DischargePressure">
+    <DisplayName>Discharge Pressure</DisplayName>
+    <cmp:Pressure Unit="bar">6.8</cmp:Pressure>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;s=CMP-101:BearingTemp" BrowseName="ns=1;BearingTemp">
+    <DisplayName>Bearing Temperature</DisplayName>
+    <cmp:Temperature Unit="degC">72.5</cmp:Temperature>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;s=CMP-101:Vibration" BrowseName="ns=1;Vibration">
+    <DisplayName>Vibration</DisplayName>
+    <cmp:Quantity Unit="vendorVib-code-9">high-ish</cmp:Quantity>
+  </UAVariable>
+  <UAObject NodeId="ns=1;s=SITE-A" BrowseName="ns=1;SiteA">
+    <DisplayName>Site A</DisplayName>
+    <cmp:Position CoordinateFrame="PlantSiteFrame" Unit="m">12.4;8.1;0.0</cmp:Position>
+    <References>
+      <Reference ReferenceType="HasComponent">ns=1;s=CMP-101</Reference>
+    </References>
+  </UAObject>
+  <Extensions>
+    <cmp:VendorTelemetry transport="mqtt" endpoint="opc.mqtt://vendor/101"/>
+  </Extensions>
+</UANodeSet>

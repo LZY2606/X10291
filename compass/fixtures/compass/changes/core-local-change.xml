@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local dependency source change: core model 1.1.0. PumpType is removed,
+     which leaves pre-existing references to it dangling. EquipmentType gains
+     one property node only, so blast radius stays local. -->
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+           xmlns:cmp="urn:compass:industrial">
+  <NamespaceUris>
+    <Uri>urn:compass:industrial:core</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="urn:compass:industrial:core" Version="1.1.0"
+           PublicationDate="2026-03-10T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.04"
+                     PublicationDate="2017-11-22T00:00:00Z"/>
+    </Model>
+  </Models>
+  <Aliases>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasProperty">i=46</Alias>
+  </Aliases>
+  <UAObjectType NodeId="ns=1;s=EquipmentType" IsAbstract="true"
+                BrowseName="ns=1;EquipmentType">
+    <DisplayName>Equipment Type (revised)</DisplayName>
+    <References>
+      <Reference ReferenceType="HasProperty">ns=1;s=EquipmentTag</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariable NodeId="ns=1;s=EquipmentTag" BrowseName="ns=1;EquipmentTag">
+    <DisplayName>Equipment Tag</DisplayName>
+    <cmp:Quantity Unit="code">EQ-0001</cmp:Quantity>
+  </UAVariable>
+  <!-- PumpType intentionally absent: references to ns=1;s=PumpType dangle. -->
+</UANodeSet>
