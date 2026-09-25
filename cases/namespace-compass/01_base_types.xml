@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet LastModified="2026-09-01T00:00:00Z">
+  <NamespaceUris>
+    <Uri>http://example.org/machinery/</Uri>
+  </NamespaceUris>
+  <Aliases>
+    <Alias Alias="HasSubtype">i=45</Alias>
+    <Alias Alias="HasComponent">i=47</Alias>
+    <Alias Alias="HasTypeDefinition">i=40</Alias>
+  </Aliases>
+  <Models>
+    <Model ModelUri="http://example.org/machinery/" Version="1.0.0" PublicationDate="2026-09-01T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.05.02" PublicationDate="2022-11-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <UAObjectType NodeId="ns=1;i=1001" BrowseName="1:MachineType">
+    <DisplayName>MachineType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+    </References>
+  </UAObjectType>
+  <UAObjectType NodeId="ns=1;i=1002" BrowseName="1:PumpType">
+    <DisplayName>PumpType</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">ns=1;i=1001</Reference>
+      <Reference ReferenceType="HasComponent">ns=1;i=2001</Reference>
+    </References>
+  </UAObjectType>
+  <UAVariable NodeId="ns=1;i=2001" BrowseName="1:Speed" DataType="i=6" ValueRank="-1">
+    <DisplayName>Speed</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+    </References>
+    <VendorExtension Revision="A"><Calibration Offset="0.5" Unit="rpm"/></VendorExtension>
+  </UAVariable>
+  <UAVariable NodeId="ns=1;i=2002" BrowseName="1:Temperature" Value="20.0" EngineeringUnits="degC" CoordinateBasis="local-frame:skid-7">
+    <DisplayName>Temperature</DisplayName>
+    <References>
+      <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+    </References>
+  </UAVariable>
+  <UADataType NodeId="ns=1;i=3001" BrowseName="1:PressureReading">
+    <DisplayName>PressureReading</DisplayName>
+    <References>
+      <Reference ReferenceType="HasSubtype" IsForward="false">i=22</Reference>
+    </References>
+  </UADataType>
+</UANodeSet>

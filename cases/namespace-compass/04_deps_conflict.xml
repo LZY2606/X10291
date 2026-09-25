@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet LastModified="2026-09-15T00:00:00Z">
+  <NamespaceUris>
+    <Uri>http://example.org/legacy/</Uri>
+  </NamespaceUris>
+  <Models>
+    <Model ModelUri="http://example.org/legacy/" Version="0.9.0" PublicationDate="2025-01-01T00:00:00Z">
+      <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.04.00" PublicationDate="2017-12-01T00:00:00Z"/>
+      <RequiredModel ModelUri="http://example.org/missing/" Version="2.0.0" PublicationDate="2026-01-01T00:00:00Z"/>
+    </Model>
+  </Models>
+  <UAObject NodeId="ns=1;i=7001" BrowseName="1:LegacyRig">
+    <DisplayName>LegacyRig</DisplayName>
+    <References>
+      <Reference ReferenceType="i=35" IsForward="false">i=85</Reference>
+    </References>
+  </UAObject>
+</UANodeSet>

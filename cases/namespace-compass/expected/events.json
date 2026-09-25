@@ -1,0 +1,20 @@
+{
+  "case": "namespace-compass",
+  "narrative": "工业建模团队导入多份 NodeSet XML 与 namespace URI 映射，组装类型、实例和引用图并比较两个模型版本",
+  "expected_judgments": [
+    {"kind": "NamespaceRemapped", "rule": "numeric namespace index is only meaningful inside one file; merge remaps by URI",
+     "checks": [{"file_id": "devices", "local_ns": 3, "uri": "http://example.org/machinery/"}]},
+    {"kind": "AliasCycleDetected", "checks": [{"file_id": "devices", "chain_contains": ["LoopA", "LoopB"]}]},
+    {"kind": "DuplicateNodeId", "checks": [{"id": "nsu=http://example.org/machinery/;i=1001", "files_contain": ["base-types", "devices"]}]},
+    {"kind": "InverseNormalized", "rule": "inverse and forward references are normalized but no missing edge is fabricated",
+     "checks": [{"declared_inverse": true}]},
+    {"kind": "DependencyVersionConflict",
+     "checks": [{"model_uri": "http://opcfoundation.org/UA/", "versions": ["1.05.02", "1.04.00"]}]},
+    {"kind": "UnresolvedDependency", "rule": "missing dependency keeps an unresolved node",
+     "checks": [{"missing_model_uri": "http://example.org/missing/"}]},
+    {"kind": "UnknownExtensionPreserved", "checks": [{"element": "VendorExtension"}]},
+    {"kind": "DanglingReference", "checks": [{"target": "nsu=http://example.org/devices/;i=5001", "edge_kept": true}]},
+    {"kind": "UnconvertibleValue", "checks": [{"attr": "Value", "raw": "N/A", "kept_in_place": true}]},
+    {"kind": "ConflictDetected", "checks": [{"reason": "two users saved from the same version; both candidates kept"}]}
+  ]
+}
